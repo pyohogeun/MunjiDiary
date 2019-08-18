@@ -15,32 +15,32 @@ class Timestamp extends React.Component {
 
     constructor(props) {
         super(props);
-        // this.state = {
-        //     records: {},
-        //     name: "",
-        //     time: "",
-        //     nowTime: ''
-        // };
+        this.state = {
+            nowTime: ''
+        };
         this._getTime = this._getTime.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
   
     _getTime() {
         const n = new Date();
+        const hours = n.getHours() < 10 ? '0' + n.getHours() : n.getHours();
         const Minute = n.getMinutes() < 10 ? '0' + n.getMinutes() : n.getMinutes();
         const seconds = n.getSeconds() < 10 ? '0' + n.getSeconds() : n.getSeconds();
-        const nowTime = `${n.getHours()  } : ${  Minute  } : ${ seconds}`;
+        const nowTime = `${ hours } : ${  Minute  } : ${ seconds}`;
         //지금시간 표시
         this.setState({
-            nowTime,
+            nowTime : nowTime
         });
     }
 
-    handleRecords(records) {
-        this.setState({
-            records: records
-        });
+    handleChange(records) {
+        
+        this.props.onRecordChange(records);
     }
+
+    
 
     _post(record) {
         return fetch(`${databaseURL}/records.json`, {
@@ -55,15 +55,16 @@ class Timestamp extends React.Component {
             })
             .then(data => {
                 let nextState = this.props.records;
+                
                 nextState[data.name] = record;
                 // this.setState({ records: nextState });
-                this.handleRecords(nextState)
+                this.handleChange(nextState);
             });
     }
 
     handleSubmitPoop = () => {
         const record = {
-            name: "poop",
+            name: "맛동산",
             time: this.state.nowTime
         };
         this._post(record);
@@ -71,7 +72,7 @@ class Timestamp extends React.Component {
 
     handleSubmitPee = () => {
         const record = {
-            name: "pee",
+            name: "감자",
             time: this.state.nowTime
         };
         this._post(record);
