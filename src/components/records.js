@@ -1,33 +1,51 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
+
+const databaseURL = "https://munzidiary.firebaseio.com";
 
 const styles = (theme) => ({});
 
 class Records extends React.Component {
-    render() {
-        const { classes } = this.props;
-        return(
-          <div className={classes.root}>
-              {/* <List component="nav" aria-label="main mailbox folders">
-                    <ListItem button>
-                  <ListItemIcon>
-                            <InboxIcon />
-                        </ListItemIcon>
-                  <ListItemText primary="Inbox" />
-                </ListItem>
-                  <ListItem button>
-                      <ListItemIcon>
-                            <DraftsIcon />
-                        </ListItemIcon>
-                      <ListItemText primary="Drafts" />
-                    </ListItem>
-                </List> */}
-                list
-            </div>
+  constructor() {
+    super();
+    this.state = {
+      records: {}
+      // name: ""
+    };
+  }
+  _get() {
+    fetch(`${databaseURL}/records.json`)
+      .then(res => {
+        if (res.status != 200) {
+          throw new Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then(records => this.setState({ records: records }));
+  }
 
-        );
-    }
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.records != this.state.records
+  }
+  componentDidMount() {
+    this._get();
+  }
+  render() {
+      // const { classes } = this.props;
+      return(
+        <div>
+          {Object.keys(this.state.records).map(id => {
+            const record = this.state.records[id];
+            return(
+              <div key={id}>
+                {record.name} {record.time}
+              </div>
+            )
+          })}
+        </div>
+      )
+  }
 
 }
 

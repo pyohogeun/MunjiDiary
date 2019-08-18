@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Timestamp from './timestamp';
 import Records from './records';
 
+
 const styles = (theme) => ({
     h1: {
         color: '#e46868',
