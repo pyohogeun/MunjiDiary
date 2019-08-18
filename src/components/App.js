@@ -25,7 +25,7 @@ class App extends React.Component {
             <div>
                 <Container maxWidth="sm">
                     <Typography variant="h1" component="h2" gutterBottom className={classes.h1}>
-                            Munji Diary
+                            Munzi Diary
                     </Typography>
                         <Typography variant="subtitle1" gutterBottom className={classes.subtitle}>
                             먼지의 배변일지입니다. 규칙적인 배변활동은 먼지의 건강에 중요합니다. 아래의 '맛동산'과 '감자' 버튼만 누르면 시간이 기록됩니다.
