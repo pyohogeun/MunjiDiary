@@ -15,10 +15,12 @@ class Timestamp extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            records: {},
-            nowTime: ''
-        };
+        // this.state = {
+        //     records: {},
+        //     name: "",
+        //     time: "",
+        //     nowTime: ''
+        // };
         this._getTime = this._getTime.bind(this);
     }
 
@@ -34,6 +36,12 @@ class Timestamp extends React.Component {
         });
     }
 
+    handleRecords(records) {
+        this.setState({
+            records: records
+        });
+    }
+
     _post(record) {
         return fetch(`${databaseURL}/records.json`, {
             method: "POST",
@@ -46,9 +54,10 @@ class Timestamp extends React.Component {
             return res.json();
             })
             .then(data => {
-                let nextState = this.state.records;
+                let nextState = this.props.records;
                 nextState[data.name] = record;
-                this.setState({ records: nextState });
+                // this.setState({ records: nextState });
+                this.handleRecords(nextState)
             });
     }
 

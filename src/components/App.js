@@ -24,7 +24,8 @@ const styles = (theme) => ({
 });
 class App extends React.Component {
     constructor(props){
-        super(props)
+        super(props);
+        this.handleRecords = this.handleRecords.bind(this);
         this.state ={
             records: {},
             name: "",
