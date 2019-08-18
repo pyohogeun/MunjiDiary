@@ -7,6 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import Timestamp from './timestamp';
 import Records from './records';
 
+const databaseURL = "https://munzidiary.firebaseio.com";
+
+
 
 const styles = (theme) => ({
     h1: {
@@ -20,6 +23,30 @@ const styles = (theme) => ({
     },
 });
 class App extends React.Component {
+    constructor(props){
+        super(props)
+        this.state ={
+            records: {},
+            name: "",
+            time: ""
+        }
+    }
+
+    _get() {
+        fetch(`${databaseURL}/records.json`)
+            .then(res => {
+            if (res.status != 200) {
+                throw new Error(res.statusText);
+            }
+            return res.json();
+            })
+            .then(records => this.setState({ records: records }));
+    }
+
+    componentDidMount() {
+        this._get();
+    }
+
     render() {
         const { classes } = this.props;
         return (
@@ -36,7 +63,7 @@ class App extends React.Component {
                     </Grid>
                 </Container>
                 <Container>
-                    <Records />
+                    <Records records={this.state.records} />
                 </Container>
           </div>
         );
