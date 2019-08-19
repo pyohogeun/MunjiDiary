@@ -7,7 +7,11 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
 
-const styles = (theme) => ({});
+const styles = (theme) => ({
+    realTime: {
+        wordBreak: 'keep-all'
+    }
+});
 
 const databaseURL = "https://munzidiary.firebaseio.com/";
 
@@ -24,14 +28,10 @@ class Timestamp extends React.Component {
 
   
     _getTime() {
-        const n = new Date();
-        const hours = n.getHours() < 10 ? '0' + n.getHours() : n.getHours();
-        const Minute = n.getMinutes() < 10 ? '0' + n.getMinutes() : n.getMinutes();
-        const seconds = n.getSeconds() < 10 ? '0' + n.getSeconds() : n.getSeconds();
-        const nowTime = `${ hours } : ${  Minute  } : ${ seconds}`;
+        const n = new Date().toLocaleString();
         //지금시간 표시
         this.setState({
-            nowTime : nowTime
+            nowTime : n
         });
     }
 
@@ -88,7 +88,7 @@ class Timestamp extends React.Component {
         const { classes } = this.props;
         return (
             <div>
-                <Typography variant="h3" gutterBottom>{this.state.nowTime}</Typography>
+                <Typography variant="h3" gutterBottom className={classes.realTime}>{this.state.nowTime}</Typography>
                 <Grid container justify="center">
                     <ButtonGroup size="large" color="primary" variant="contained" aria-label="contained button group">
                         <Button className={classes.button} onClick={this.handleSubmitPoop}>

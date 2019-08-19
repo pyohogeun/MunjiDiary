@@ -58,7 +58,7 @@ class App extends React.Component {
         const { classes } = this.props;
         return (
             <div>
-                <Container maxWidth="sm">
+                <Container maxWidth="md">
                     <Typography variant="h1" component="h2" gutterBottom className={classes.h1}>
                             Munzi Diary
                     </Typography>
@@ -69,7 +69,7 @@ class App extends React.Component {
                         <Timestamp records={this.state.records} onRecordChange={this.handleRecords} />
                     </Grid>
                 </Container>
-                <Container>
+                <Container maxWidth="md">
                     <Records records={this.state.records} />
                 </Container>
           </div>
