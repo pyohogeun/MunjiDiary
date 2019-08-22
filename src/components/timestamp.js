@@ -13,7 +13,7 @@ const styles = (theme) => ({
     }
 });
 
-const databaseURL = "https://munzidiary.firebaseio.com/";
+const databaseURL = "https://munzidiary.firebaseio.com";
 
 class Timestamp extends React.Component {
 
@@ -36,7 +36,6 @@ class Timestamp extends React.Component {
     }
 
     handleChange(records) {
-        
         this.props.onRecordChange(records);
     }
 

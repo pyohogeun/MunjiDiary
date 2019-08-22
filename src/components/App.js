@@ -33,7 +33,6 @@ class App extends React.Component {
         }
     }
     handleRecords(record) {
-        console.log(record);
         this.setState({
             records: record
         });
@@ -70,7 +69,7 @@ class App extends React.Component {
                     </Grid>
                 </Container>
                 <Container maxWidth="md">
-                    <Records records={this.state.records} />
+                    <Records records={this.state.records} onRecordChange={this.handleRecords}/>
                 </Container>
           </div>
         );
