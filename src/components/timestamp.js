@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import CreateIcon from '@material-ui/icons/Create';
 
 
 const styles = (theme) => ({
@@ -33,6 +34,10 @@ class Timestamp extends React.Component {
         this.setState({
             nowTime : n
         });
+    }
+
+    handleTimeInterval(){
+        setInterval(this._getTime, 1000);
     }
 
     handleChange(records) {
@@ -76,11 +81,19 @@ class Timestamp extends React.Component {
         };
         this._post(record);
     };
+    handleAddNewRecord = () => {
+        const record = {
+            name: "",
+            time: null
+        }
+        
+        console.log('New record!!!');
+    };
 
     
   
     componentDidMount() {
-        this._getTime();
+        this.handleTimeInterval();
     }
   
     render() {
@@ -101,6 +114,12 @@ class Timestamp extends React.Component {
                             onClick={this._getTime}
                         >
                             <RefreshIcon className={classes.icon} />
+                        </Button>
+                        <Button
+                            className={classes.button}
+                            onClick={this.handleAddNewRecord}
+                        >
+                            <CreateIcon></CreateIcon>
                         </Button>
                     </ButtonGroup>
                 </Grid>
