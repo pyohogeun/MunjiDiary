@@ -37,7 +37,6 @@ class App extends React.Component {
             records: record
         });
     }
-
     _get() {
         fetch(`${databaseURL}/records.json`)
             .then(res => {
