@@ -13,9 +13,12 @@ import Button from '@material-ui/core/Button';
 import koLocale from "date-fns/locale/ko";
 
 
-const styles = (theme) => ({
+const styles = () => ({
   root: {
-    backgroundColor: 'red',
+    width: '100%',
+    textAlign: 'center',
+    marginTop: 20,
+    padding: 10,
   }
 });
 
@@ -29,9 +32,14 @@ class MaterialUIPickers extends React.Component {
     this.handleDateChange = this.handleDateChange.bind(this);
   }
 
+  handleSubmitPee = () => {
+    let date = this.state.selectedDate.toLocaleString();;
+    this.props.onTimestampPee(date)
+  }
+
   handleDateChange(date) {
     this.setState({
-      setSelectedDate: date 
+      selectedDate: date 
     });
   }
 
@@ -42,10 +50,13 @@ class MaterialUIPickers extends React.Component {
       <div>
         <MuiPickersUtilsProvider utils={DateFnsUtils} locale={koLocale}>
           <Grid container justify="space-around">
-            <Paper>
-              <DateTimePicker value={this.state.selectedDate} onChange={this.state.handleDateChange} />
+            <Paper className={classes.root}>
+              <DateTimePicker value={this.state.selectedDate} onChange={this.handleDateChange} />
               <Button>
-                <SaveIcon></SaveIcon>
+                맛동산 <SaveIcon></SaveIcon>
+              </Button>
+              <Button onClick={this.handleSubmitPee}>
+                감자 <SaveIcon></SaveIcon>
               </Button>
             </Paper>
           </Grid>
@@ -56,23 +67,3 @@ class MaterialUIPickers extends React.Component {
 }
 
 export default withStyles(styles)(MaterialUIPickers);
-// export default function MaterialUIPickers() {
-//   const [selectedDate, setSelectedDate] = React.useState(new Date());
-
-//   function handleDateChange(date) {
-//     setSelectedDate(date);
-//   }
-
-//   return (
-//     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-//       <Grid container justify="space-around">
-//         <Paper>
-//           <DateTimePicker value={selectedDate} onChange={handleDateChange} />
-//           <Button>
-//             <SaveIcon></SaveIcon>
-//           </Button>
-//         </Paper>
-//       </Grid>
-//     </MuiPickersUtilsProvider>
-//   );
-// }

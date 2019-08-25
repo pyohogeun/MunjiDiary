@@ -13,6 +13,9 @@ import Timestampcustom from './timestampcustom';
 const styles = (theme) => ({
     realTime: {
         wordBreak: 'keep-all'
+    },
+    timestampWrap:{
+        width: '100%',
     }
 });
 
@@ -27,6 +30,7 @@ class Timestamp extends React.Component {
             customTimestampToggle: false
         };
         this._getTime = this._getTime.bind(this);
+        this._setTime = this._setTime.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleTimestampToggle = this.handleTimestampToggle.bind(this);
     }
@@ -38,6 +42,13 @@ class Timestamp extends React.Component {
         this.setState({
             nowTime : n
         });
+    }
+    _setTime(date){
+        const n = date.toLocaleString();
+        this.setState({
+            nowTime: n
+        })
+
     }
 
     handleTimeInterval(){
@@ -85,21 +96,12 @@ class Timestamp extends React.Component {
         };
         this._post(record);
     };
-    handleAddNewRecord = () => {
-        const record = {
-            name: "",
-            time: null
-        }
-        
-        console.log('New record!!!');
-    };
 
     handleTimestampToggle = () => {
         this.setState({
             customTimestampToggle: !this.state.customTimestampToggle
         });
         const nn = this.state.customTimestampToggle
-        console.log('click!handleT' + nn);
     }
 
     
@@ -110,11 +112,9 @@ class Timestamp extends React.Component {
     
     render() {
         const { classes } = this.props;
-        // const [open, setOpen] = React.useState(false);
-        
         
         return (
-            <div>
+            <div className={classes.timestampWrap}>
                 <Grid container justify="center">
                     <Typography variant="h3" gutterBottom className={classes.realTime}>{this.state.nowTime}</Typography>
                 </Grid>
@@ -143,7 +143,7 @@ class Timestamp extends React.Component {
                     </Grid>
                     <Grid item xs={12}>                
                         {this.state.customTimestampToggle ? (
-                            <Timestampcustom />
+                            <Timestampcustom onTimestampPee={this.handleSubmitPee} />
                         ) : null}
                     </Grid>
                 </Grid>
