@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Timestamp from './timestamp';
+import Timestampcustom from './timestampcustom';
 import Records from './records';
 
 const databaseURL = "https://munzidiary.firebaseio.com";
@@ -65,6 +66,7 @@ class App extends React.Component {
                     </Typography>
                         <Grid container justify="center" className={classes.timeStampWrap}>
                         <Timestamp records={this.state.records} onRecordChange={this.handleRecords} />
+                        <Timestampcustom />
                     </Grid>
                 </Container>
                 <Container maxWidth="md">
