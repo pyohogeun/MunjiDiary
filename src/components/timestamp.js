@@ -119,27 +119,29 @@ class Timestamp extends React.Component {
                     <Typography variant="h3" gutterBottom className={classes.realTime}>{this.state.nowTime}</Typography>
                 </Grid>
                 <Grid container justify="center">
-                    <ButtonGroup size="large" color="primary" variant="contained" aria-label="contained button group">
-                        <Button className={classes.button} onClick={this.handleSubmitPoop}>
-                            맛동산
-                        </Button>
-                        <Button className={classes.button} onClick={this.handleSubmitPee}>
-                            감자
-                        </Button>
-                        <Button
-                            className={classes.button}
-                            onClick={this._getTime}
-                        >
-                            <RefreshIcon className={classes.icon} />
-                        </Button>
-                        <Button
-                            className={classes.button}
-                            onClick={this.handleTimestampToggle}
-                        >
-                            <CreateIcon></CreateIcon>
-                        </Button>
-                    </ButtonGroup>
-                    <Grid>                
+                    <Grid item xs={12}>
+                        <ButtonGroup size='large' fullWidth={true} color='primary' variant="contained" aria-label="contained button group" className={classes.ButtonGroup}> 
+                            <Button className={classes.button} onClick={this.handleSubmitPoop}>
+                                맛동산
+                            </Button>
+                            <Button className={classes.button} onClick={this.handleSubmitPee}>
+                                감자
+                            </Button>
+                            <Button
+                                className={classes.button}
+                                onClick={this._getTime}
+                            >
+                                <RefreshIcon className={classes.icon} />
+                            </Button>
+                            <Button
+                                className={classes.button}
+                                onClick={this.handleTimestampToggle}
+                            >
+                                <CreateIcon></CreateIcon>
+                            </Button>
+                        </ButtonGroup>
+                    </Grid>
+                    <Grid item xs={12}>                
                         {this.state.customTimestampToggle ? (
                             <Timestampcustom />
                         ) : null}
