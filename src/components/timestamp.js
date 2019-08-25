@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import CreateIcon from '@material-ui/icons/Create';
+import Timestampcustom from './timestampcustom';
+
 
 
 const styles = (theme) => ({
@@ -21,10 +23,12 @@ class Timestamp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            nowTime: ''
+            nowTime: '',
+            customTimestampToggle: true
         };
         this._getTime = this._getTime.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleTimestampToggle = this.handleTimestampToggle.bind(this);
     }
 
   
@@ -90,17 +94,30 @@ class Timestamp extends React.Component {
         console.log('New record!!!');
     };
 
+    handleTimestampToggle = () => {
+        this.setState({
+            customTimestampToggle: !this.state.customTimestampToggle
+        });
+        const nn = this.state.customTimestampToggle
+        console.log('click!handleT' + nn);
+    }
+
     
   
     componentDidMount() {
         this.handleTimeInterval();
     }
-  
+    
     render() {
         const { classes } = this.props;
+        // const [open, setOpen] = React.useState(false);
+        
+        
         return (
             <div>
-                <Typography variant="h3" gutterBottom className={classes.realTime}>{this.state.nowTime}</Typography>
+                <Grid container justify="center">
+                    <Typography variant="h3" gutterBottom className={classes.realTime}>{this.state.nowTime}</Typography>
+                </Grid>
                 <Grid container justify="center">
                     <ButtonGroup size="large" color="primary" variant="contained" aria-label="contained button group">
                         <Button className={classes.button} onClick={this.handleSubmitPoop}>
@@ -117,11 +134,16 @@ class Timestamp extends React.Component {
                         </Button>
                         <Button
                             className={classes.button}
-                            onClick={this.handleAddNewRecord}
+                            onClick={this.handleTimestampToggle}
                         >
                             <CreateIcon></CreateIcon>
                         </Button>
                     </ButtonGroup>
+                    <Grid>                
+                        {this.state.customTimestampToggle ? (
+                            <Timestampcustom />
+                        ) : null}
+                    </Grid>
                 </Grid>
             </div>
         );
