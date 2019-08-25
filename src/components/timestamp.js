@@ -24,7 +24,7 @@ class Timestamp extends React.Component {
         super(props);
         this.state = {
             nowTime: '',
-            customTimestampToggle: true
+            customTimestampToggle: false
         };
         this._getTime = this._getTime.bind(this);
         this.handleChange = this.handleChange.bind(this);
