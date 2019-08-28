@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Table from "@material-ui/core/Table";
@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = theme => ({
   root: {
@@ -18,8 +19,32 @@ const styles = theme => ({
   },
   table: {
     minWidth: 300
+  },
+  CircleProgressBar: {
+    margin: "20px auto",
+    display: "flex",
+    justifyContent: "center"
   }
 });
+
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    "&:first-child": {
+      width: 60
+    },
+    "&:last-child": {
+      paddingRight: 5
+    }
+  },
+  body: {
+    "&:first-child": {
+      width: 60
+    },
+    "&:last-child": {
+      paddingRight: 5
+    }
+  }
+}))(TableCell);
 
 const databaseURL = "https://munzidiary.firebaseio.com";
 
@@ -54,39 +79,45 @@ class Records extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.listWrap}>
-        <Paper className={classes.root}>
-          <Table className={classes.table} size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>구분</TableCell>
-                <TableCell>시간</TableCell>
-                <TableCell>삭제</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Object.keys(this.props.records).map(id => {
-                const record = this.props.records[id];
-                return (
-                  <TableRow key={id}>
-                    <TableCell component="th" scope="row">
-                      {record.name}
-                    </TableCell>
-                    <TableCell>{record.time}</TableCell>
-                    <TableCell>
-                      <IconButton
-                        aria-label="delete"
-                        className={classes.margin}
-                        onClick={() => this._delete(id)}
-                      >
-                        <DeleteIcon fontSize="small" />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </Paper>
+        {this.props.records ? (
+          <Paper className={classes.root}>
+            <Table className={classes.table} size="small">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell>구분</StyledTableCell>
+                  <StyledTableCell>시간</StyledTableCell>
+                  <StyledTableCell align="center">삭제</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Object.keys(this.props.records).map(id => {
+                  const record = this.props.records[id];
+                  return (
+                    <TableRow key={id}>
+                      <StyledTableCell component="th" scope="row">
+                        {record.name}
+                      </StyledTableCell>
+                      <StyledTableCell>{record.time}</StyledTableCell>
+                      <StyledTableCell>
+                        <IconButton
+                          aria-label="delete"
+                          className={classes.margin}
+                          onClick={() => this._delete(id)}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </StyledTableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </Paper>
+        ) : (
+          <div className={classes.CircleProgressBar}>
+            <CircularProgress />
+          </div>
+        )}
       </div>
     );
   }

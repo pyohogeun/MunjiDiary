@@ -8,6 +8,7 @@ import RefreshIcon from "@material-ui/icons/Refresh";
 import CreateIcon from "@material-ui/icons/Create";
 import Timestampcustom from "./timestampcustom";
 import Collapse from "@material-ui/core/Collapse";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = theme => ({
   realTime: {
@@ -15,6 +16,9 @@ const styles = theme => ({
   },
   timestampWrap: {
     width: "100%"
+  },
+  CircleProgressBar: {
+    marginBottom: 20
   }
 });
 
@@ -111,9 +115,15 @@ class Timestamp extends React.Component {
     return (
       <div className={classes.timestampWrap}>
         <Grid container justify="center">
-          <Typography variant="h3" gutterBottom className={classes.realTime}>
-            {this.state.nowTime}
-          </Typography>
+          {this.state.nowTime ? (
+            <Typography variant="h3" gutterBottom className={classes.realTime}>
+              {this.state.nowTime}
+            </Typography>
+          ) : (
+            <div className={classes.CircleProgressBar}>
+              <CircularProgress />
+            </div>
+          )}
         </Grid>
         <Grid container justify="center">
           <Grid item xs={12}>
@@ -143,12 +153,6 @@ class Timestamp extends React.Component {
             </ButtonGroup>
           </Grid>
           <Grid item xs={12}>
-            {/* {this.state.customTimestampToggle ? (
-              <Timestampcustom
-                onTimestampPee={this.handleSubmitPee}
-                onTimestampPoop={this.handleSubmitPoop}
-              />
-            ) : null} */}
             <Collapse in={this.state.customTimestampToggle}>
               <Timestampcustom
                 onTimestampPee={this.handleSubmitPee}

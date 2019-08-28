@@ -15,7 +15,7 @@ const styles = () => ({
   root: {
     width: "100%",
     textAlign: "center",
-    marginTop: 20,
+    marginTop: 10,
     padding: 10
   },
   datepickerWrap: {
