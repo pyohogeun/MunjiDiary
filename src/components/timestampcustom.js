@@ -18,6 +18,9 @@ const styles = () => ({
     marginTop: 20,
     padding: 10
   },
+  datepickerWrap: {
+    padding: 10
+  },
   datepicker: {
     display: "flex",
     alignItems: "center",
@@ -61,7 +64,7 @@ class MaterialUIPickers extends React.Component {
           <Grid container justify="space-around">
             <Paper className={classes.root}>
               <Grid container>
-                <Grid item xs={8}>
+                <Grid item xs={12} md={8} className={classes.datepickerWrap}>
                   <div className={classes.datepicker}>
                     <DateTimePicker
                       value={this.state.selectedDate}
@@ -70,7 +73,7 @@ class MaterialUIPickers extends React.Component {
                     <DateRangeIcon className={classes.icon} />
                   </div>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} md={4}>
                   <ButtonGroup
                     size="large"
                     fullWidth={true}

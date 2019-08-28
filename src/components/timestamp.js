@@ -7,6 +7,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import CreateIcon from "@material-ui/icons/Create";
 import Timestampcustom from "./timestampcustom";
+import Collapse from "@material-ui/core/Collapse";
 
 const styles = theme => ({
   realTime: {
@@ -142,12 +143,18 @@ class Timestamp extends React.Component {
             </ButtonGroup>
           </Grid>
           <Grid item xs={12}>
-            {this.state.customTimestampToggle ? (
+            {/* {this.state.customTimestampToggle ? (
               <Timestampcustom
                 onTimestampPee={this.handleSubmitPee}
                 onTimestampPoop={this.handleSubmitPoop}
               />
-            ) : null}
+            ) : null} */}
+            <Collapse in={this.state.customTimestampToggle}>
+              <Timestampcustom
+                onTimestampPee={this.handleSubmitPee}
+                onTimestampPoop={this.handleSubmitPoop}
+              />
+            </Collapse>
           </Grid>
         </Grid>
       </div>
