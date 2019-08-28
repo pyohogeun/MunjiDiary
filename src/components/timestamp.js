@@ -133,9 +133,6 @@ class Timestamp extends React.Component {
               <Button className={classes.button} onClick={this.handleSubmitPee}>
                 감자
               </Button>
-              <Button className={classes.button} onClick={this._getTime}>
-                <RefreshIcon className={classes.icon} />
-              </Button>
               <Button
                 className={classes.button}
                 onClick={this.handleTimestampToggle}
