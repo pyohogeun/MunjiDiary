@@ -10,20 +10,20 @@ import Records from "./records";
 import * as firebase from "firebase/app";
 import * as database from "firebase/database";
 
-var firebaseConfig = {
-  apiKey: "AIzaSyBZWci0O-tUABy-jVcWZ1-qxnYUtUm3SBw",
-  authDomain: "munzidiary.firebaseapp.com",
-  databaseURL: "https://munzidiary.firebaseio.com",
-  projectId: "munzidiary",
-  storageBucket: "munzidiary.appspot.com",
-  messagingSenderId: "832856698052",
-  appId: "1:832856698052:web:b6e9633433645c97"
-};
+// var firebaseConfig = {
+//   apiKey: "AIzaSyBZWci0O-tUABy-jVcWZ1-qxnYUtUm3SBw",
+//   authDomain: "munzidiary.firebaseapp.com",
+//   databaseURL: "https://munzidiary.firebaseio.com",
+//   projectId: "munzidiary",
+//   storageBucket: "munzidiary.appspot.com",
+//   messagingSenderId: "832856698052",
+//   appId: "1:832856698052:web:b6e9633433645c97"
+// };
 
-var defaultProject = firebase.initializeApp(firebaseConfig);
+// var defaultProject = firebase.initializeApp(firebaseConfig);
 
-var database = firebase.database();
-console.log("db는" + database);
+// var database = firebase.database();
+// console.log("db는" + database);
 
 const databaseURL = "https://munzidiary.firebaseio.com";
 
