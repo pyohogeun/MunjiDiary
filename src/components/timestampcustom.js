@@ -41,11 +41,13 @@ class MaterialUIPickers extends React.Component {
 
   handleSubmitPee = () => {
     let date = this.state.selectedDate.toLocaleString();
-    this.props.onTimestampPee(date);
+    const type = "custom";
+    this.props.onTimestampPee(type, date);
   };
 
   handleSubmitPoop = () => {
     let date = this.state.selectedDate.toLocaleString();
+    const type = "custom";
     this.props.onTimestampPoop(date);
   };
 

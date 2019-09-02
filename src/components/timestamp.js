@@ -59,42 +59,36 @@ class Timestamp extends React.Component {
     this.props.onRecordChange(records);
   }
 
-  _post(record) {
-    return fetch(`${databaseURL}/records.json`, {
-      method: "POST",
-      body: JSON.stringify(record)
-    })
-      .then(res => {
-        if (res.status != 200) {
-          throw new Error(res.statusText);
-        }
-        return res.json();
-      })
-      .then(data => {
-        let nextState = this.props.records;
-
-        nextState[data.name] = record;
-        // this.setState({ records: nextState });
-        this.handleChange(nextState);
+  async _post(record) {
+    const res = await fetch(`${databaseURL}/records.json`, {
+          method: "POST",
+          body: JSON.stringify(record)
       });
+      if (res.status != 200) {
+          throw new Error(res.statusText);
+      }
+      const data = await res.json();
+      let nextState = this.props.records;
+      nextState[data.name] = record;
+      // this.setState({ records: nextState });
+      this.handleChange(nextState);
   }
 
-  handleSubmitPoop = date => {
+  handleSubmitPoop = (type, date) => {
     const record = {
       name: "맛동산",
       time: ""
     };
-    date ? (record.time = date) : (record.time = this.state.nowTime);
+    type === "custom" ? (record.time = date) : (record.time = this.state.nowTime);
     this._post(record);
   };
 
-  handleSubmitPee = date => {
-    console.log(date);
+  handleSubmitPee = (type, date) => {
     const record = {
       name: "감자",
       time: ""
     };
-    date ? (record.time = date) : (record.time = this.state.nowTime);
+    type === "custom" ? (record.time = date) : (record.time = this.state.nowTime);
     this._post(record);
   };
 
