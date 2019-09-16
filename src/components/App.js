@@ -4,9 +4,10 @@ import { withStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Button from '@material-ui/core/Button';
 import Timestamp from "./timestamp";
-import Timestampcustom from "./timestampcustom";
 import Records from "./records";
+
 
 import db from './config';
 
@@ -20,6 +21,9 @@ const styles = theme => ({
   },
   timeStampWrap: {
     marginTop: 30
+  },
+  moreButton:{
+    marginTop: 10
   }
 });
 class App extends React.Component {
@@ -41,13 +45,24 @@ class App extends React.Component {
       .get()
       .then((querySnapshot) => {
         var records = {}
+        var lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+        console.log('lastVisible:'+lastVisible)
         querySnapshot.forEach(function(doc) {
             records[doc.id] = { name: doc.data().name, time : doc.data().time }
         });
         this.setState({
           records: records
         })
+        
       })
+  }
+
+  _moreList(){
+    console.log("more! and : " + this.state.limit );
+    this.setState({
+      limit : this.state.limit + 5
+    });
+    this._get();
   }
 
   componentDidMount() {
@@ -86,8 +101,12 @@ class App extends React.Component {
           <Records
             records={this.state.records}
             onRecordChange={this.handleRecords}
-            _get={this._get}
           />
+          <Grid container justify="center">
+            <Grid item>
+              <Button className={classes.moreButton} onClick={() => this._moreList()}>more</Button>
+            </Grid>
+          </Grid>
         </Container>
       </div>
     );

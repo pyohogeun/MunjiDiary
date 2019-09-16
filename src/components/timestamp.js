@@ -88,7 +88,6 @@ class Timestamp extends React.Component {
       time: "",
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     };
-    console.log(type, date);
     type === "custom" ? (record = {name: '맛동산', time : date, timestamp : timestamp}) : (record.time = this.state.nowTime);
     this._post(record);
   };

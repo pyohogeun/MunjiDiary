@@ -57,9 +57,6 @@ class Records extends React.Component {
   handleChange(records) {
     this.props.onRecordChange(records);
   }
-  handleGet(){
-    this.props._get();
-  }
 
   _delete(id) {
     if (confirm("삭제하시겠습니까? =>" + id) === true) {
