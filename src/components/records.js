@@ -10,6 +10,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import db from './config';
 
 const styles = theme => ({
   root: {
@@ -58,21 +59,27 @@ class Records extends React.Component {
   }
 
   _delete(id) {
-    if (confirm("삭제하시겠습니까?") === true) {
-      return fetch(`${databaseURL}/records/${id}.json`, {
-        method: "DELETE"
-      })
-        .then(res => {
-          if (res.status != 200) {
-            throw new Error(res.statusText);
-          }
-          return res.json();
-        })
-        .then(() => {
-          let nextState = this.props.records;
-          delete nextState[id];
-          this.handleChange(nextState);
-        });
+    if (confirm("삭제하시겠습니까? =>" + id) === true) {
+      db.collection("records").doc(id).then(
+        function(){
+          console.log("삭제완료");
+        }
+      )
+      // return fetch(`${databaseURL}/records/${id}.json`, {
+      //   method: "DELETE"
+      // })
+      //   .then(res => {
+      //     if (res.status != 200) {
+      //       throw new Error(res.statusText);
+      //     }
+      //     return res.json();
+      //   })
+      //   .then(() => {
+      //     let nextState = this.props.records;
+      //     delete nextState[id];
+      //     this.handleChange(nextState);
+      //   });
+      
     }
   }
   render() {

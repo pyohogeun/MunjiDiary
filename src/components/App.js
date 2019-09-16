@@ -7,38 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import Timestamp from "./timestamp";
 import Timestampcustom from "./timestampcustom";
 import Records from "./records";
-import * as firebase from "firebase/app";
-import * as firestore from 'firebase/firestore';
-// import * as database from "firebase/database";
-// require("firebase/firestore");
 
-var firebaseConfig = {
-    apiKey: "AIzaSyBZWci0O-tUABy-jVcWZ1-qxnYUtUm3SBw",
-    authDomain: "munzidiary.firebaseapp.com",
-    databaseURL: "https://munzidiary.firebaseio.com",
-    projectId: "munzidiary",
-    storageBucket: "munzidiary.appspot.com",
-    messagingSenderId: "832856698052",
-    appId: "1:832856698052:web:b6e9633433645c97"
-  };
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-var db = firebase.firestore();
-
-// db.collection("users").add({
-//   first: "Alan",
-//   middle: "Mathison",
-//   last: "Turing",
-//   born: 1912
-// })
-// .then(function(docRef) {
-//   console.log("Document written with ID: ", docRef.id);
-// })
-// .catch(function(error) {
-//   console.error("Error adding document: ", error);
-// });
-
+import db from './config';
 
 const styles = theme => ({
   h1: {
@@ -123,14 +93,10 @@ class App extends React.Component {
           </Grid>
         </Container> */}
         <Container maxWidth="md">
-          {this.state.records ? (
-            <Records
-              records={this.state.records}
-              onRecordChange={this.handleRecords}
-            />
-          ) : (
-            "로딩중"
-          )}
+          <Records
+            records={this.state.records}
+            onRecordChange={this.handleRecords}
+          />
         </Container>
       </div>
     );
