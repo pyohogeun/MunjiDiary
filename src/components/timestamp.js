@@ -82,23 +82,24 @@ class Timestamp extends React.Component {
 
   }
 
-  handleSubmitPoop = (type, date) => {
-    const record = {
+  handleSubmitPoop = (type, date, timestamp) => {
+    var record = {
       name: "맛동산",
       time: "",
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     };
-    type === "custom" ? (record.time = date) : (record.time = this.state.nowTime);
+    console.log(type, date);
+    type === "custom" ? (record = {name: '맛동산', time : date, timestamp : timestamp}) : (record.time = this.state.nowTime);
     this._post(record);
   };
 
-  handleSubmitPee = (type, date) => {
-    const record = {
+  handleSubmitPee = (type, date, timestamp) => {
+    var record = {
       name: "감자",
       time: "",
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     };
-    type === "custom" ? (record.time = date) : (record.time = this.state.nowTime);
+    type === "custom" ? (record = {name: '감자', time : date, timestamp : timestamp}) : (record.time = this.state.nowTime);
     this._post(record);
   };
 

@@ -34,21 +34,22 @@ class MaterialUIPickers extends React.Component {
     super(props);
     this.state = {
       selectedDate: new Date(),
-      setSelectedDate: new Date()
     };
     this.handleDateChange = this.handleDateChange.bind(this);
   }
 
   handleSubmitPee = () => {
     let date = this.state.selectedDate.toLocaleString();
+    let timestamp = this.state.selectedDate;
     const type = "custom";
-    this.props.onTimestampPee(type, date);
+    this.props.onTimestampPee(type, date, timestamp);
   };
 
   handleSubmitPoop = () => {
     let date = this.state.selectedDate.toLocaleString();
+    let timestamp = this.state.selectedDate;
     const type = "custom";
-    this.props.onTimestampPoop(date);
+    this.props.onTimestampPoop(type, date, timestamp);
   };
 
   handleDateChange(date) {
