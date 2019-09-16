@@ -8,24 +8,37 @@ import Timestamp from "./timestamp";
 import Timestampcustom from "./timestampcustom";
 import Records from "./records";
 import * as firebase from "firebase/app";
-import * as database from "firebase/database";
+import * as firestore from 'firebase/firestore';
+// import * as database from "firebase/database";
+// require("firebase/firestore");
 
-// var firebaseConfig = {
-//   apiKey: "AIzaSyBZWci0O-tUABy-jVcWZ1-qxnYUtUm3SBw",
-//   authDomain: "munzidiary.firebaseapp.com",
-//   databaseURL: "https://munzidiary.firebaseio.com",
-//   projectId: "munzidiary",
-//   storageBucket: "munzidiary.appspot.com",
-//   messagingSenderId: "832856698052",
-//   appId: "1:832856698052:web:b6e9633433645c97"
-// };
+var firebaseConfig = {
+    apiKey: "AIzaSyBZWci0O-tUABy-jVcWZ1-qxnYUtUm3SBw",
+    authDomain: "munzidiary.firebaseapp.com",
+    databaseURL: "https://munzidiary.firebaseio.com",
+    projectId: "munzidiary",
+    storageBucket: "munzidiary.appspot.com",
+    messagingSenderId: "832856698052",
+    appId: "1:832856698052:web:b6e9633433645c97"
+  };
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
-// var defaultProject = firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
 
-// var database = firebase.database();
-// console.log("db는" + database);
+// db.collection("users").add({
+//   first: "Alan",
+//   middle: "Mathison",
+//   last: "Turing",
+//   born: 1912
+// })
+// .then(function(docRef) {
+//   console.log("Document written with ID: ", docRef.id);
+// })
+// .catch(function(error) {
+//   console.error("Error adding document: ", error);
+// });
 
-const databaseURL = "https://munzidiary.firebaseio.com";
 
 const styles = theme => ({
   h1: {
@@ -53,15 +66,28 @@ class App extends React.Component {
       records: record
     });
   }
-  _get() {
-    fetch(`${databaseURL}/records.json`)
-      .then(res => {
-        if (res.status != 200) {
-          throw new Error(res.statusText);
-        }
-        return res.json();
+//   _get() {
+//     fetch(`${databaseURL}/records.json`)
+//       .then(res => {
+//         if (res.status != 200) {
+//           throw new Error(res.statusText);
+//         }
+//         return res.json();
+//       })
+//       .then(records => this.setState({ records: records }));
+//   }
+  _get(){
+    db.collection("records")
+      .get()
+      .then((querySnapshot) => {
+        var records = {}
+        querySnapshot.forEach(function(doc) {
+            records[doc.id] = { name: doc.data().name, time : doc.data().time }
+        });
+        this.setState({
+          records: records
+        })
       })
-      .then(records => this.setState({ records: records }));
   }
 
   componentDidMount() {
@@ -72,7 +98,7 @@ class App extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <Container maxWidth="md">
+        {/* <Container maxWidth="md">
           <Typography
             variant="h1"
             component="h2"
@@ -95,7 +121,7 @@ class App extends React.Component {
               onRecordChange={this.handleRecords}
             />
           </Grid>
-        </Container>
+        </Container> */}
         <Container maxWidth="md">
           {this.state.records ? (
             <Records
