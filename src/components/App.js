@@ -37,7 +37,7 @@ class App extends React.Component {
   }
 
   _get(){
-    db.collection("records")
+    db.collection("records").orderBy("timestamp", "desc").limit(5)
       .get()
       .then((querySnapshot) => {
         var records = {}
@@ -58,7 +58,7 @@ class App extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        {/* <Container maxWidth="md">
+        <Container maxWidth="md">
           <Typography
             variant="h1"
             component="h2"
@@ -81,7 +81,7 @@ class App extends React.Component {
               onRecordChange={this.handleRecords}
             />
           </Grid>
-        </Container> */}
+        </Container>
         <Container maxWidth="md">
           <Records
             records={this.state.records}

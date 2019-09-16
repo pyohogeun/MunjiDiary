@@ -9,6 +9,9 @@ import CreateIcon from "@material-ui/icons/Create";
 import Timestampcustom from "./timestampcustom";
 import Collapse from "@material-ui/core/Collapse";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import * as firebase from "firebase/app";
+import * as firestore from 'firebase/firestore';
+import db from './config';
 
 const styles = theme => ({
   realTime: {
@@ -22,7 +25,7 @@ const styles = theme => ({
   }
 });
 
-const databaseURL = "https://munzidiary.firebaseio.com";
+// const databaseURL = "https://munzidiary.firebaseio.com";
 
 class Timestamp extends React.Component {
   constructor(props) {
@@ -60,24 +63,30 @@ class Timestamp extends React.Component {
   }
 
   async _post(record) {
-    const res = await fetch(`${databaseURL}/records.json`, {
-          method: "POST",
-          body: JSON.stringify(record)
-      });
-      if (res.status != 200) {
-          throw new Error(res.statusText);
-      }
-      const data = await res.json();
-      let nextState = this.props.records;
-      nextState[data.name] = record;
-      // this.setState({ records: nextState });
-      this.handleChange(nextState);
+    // const res = await fetch(`${databaseURL}/records.json`, {
+    //       method: "POST",
+    //       body: JSON.stringify(record)
+    //   });
+    //   if (res.status != 200) {
+    //       throw new Error(res.statusText);
+    //   }
+    //   const data = await res.json();
+    //   let nextState = this.props.records;
+    //   nextState[data.name] = record;
+    //   // this.setState({ records: nextState });
+    //   this.handleChange(nextState);
+    db.collection("records").add(record)
+      .then(() => {
+        this.handleChange();
+      })
+
   }
 
   handleSubmitPoop = (type, date) => {
     const record = {
       name: "맛동산",
-      time: ""
+      time: "",
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
     };
     type === "custom" ? (record.time = date) : (record.time = this.state.nowTime);
     this._post(record);
@@ -86,7 +95,8 @@ class Timestamp extends React.Component {
   handleSubmitPee = (type, date) => {
     const record = {
       name: "감자",
-      time: ""
+      time: "",
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
     };
     type === "custom" ? (record.time = date) : (record.time = this.state.nowTime);
     this._post(record);
