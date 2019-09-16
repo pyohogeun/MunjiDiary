@@ -10,6 +10,7 @@ import Records from "./records";
 
 import db from './config';
 
+
 const styles = theme => ({
   h1: {
     color: "#e46868"
@@ -31,21 +32,10 @@ class App extends React.Component {
       time: ""
     };
   }
-  handleRecords(record) {
-    this.setState({
-      records: record
-    });
+  handleRecords() {
+    this._get();
   }
-//   _get() {
-//     fetch(`${databaseURL}/records.json`)
-//       .then(res => {
-//         if (res.status != 200) {
-//           throw new Error(res.statusText);
-//         }
-//         return res.json();
-//       })
-//       .then(records => this.setState({ records: records }));
-//   }
+
   _get(){
     db.collection("records")
       .get()
@@ -96,6 +86,7 @@ class App extends React.Component {
           <Records
             records={this.state.records}
             onRecordChange={this.handleRecords}
+            _get={this._get}
           />
         </Container>
       </div>

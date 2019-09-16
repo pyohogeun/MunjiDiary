@@ -47,7 +47,7 @@ const StyledTableCell = withStyles(theme => ({
   }
 }))(TableCell);
 
-const databaseURL = "https://munzidiary.firebaseio.com";
+// const databaseURL = "https://munzidiary.firebaseio.com";
 
 class Records extends React.Component {
   constructor(props) {
@@ -57,29 +57,20 @@ class Records extends React.Component {
   handleChange(records) {
     this.props.onRecordChange(records);
   }
+  handleGet(){
+    this.props._get();
+  }
 
   _delete(id) {
     if (confirm("삭제하시겠습니까? =>" + id) === true) {
-      db.collection("records").doc(id).then(
-        function(){
-          console.log("삭제완료");
-        }
-      )
-      // return fetch(`${databaseURL}/records/${id}.json`, {
-      //   method: "DELETE"
-      // })
-      //   .then(res => {
-      //     if (res.status != 200) {
-      //       throw new Error(res.statusText);
-      //     }
-      //     return res.json();
-      //   })
-      //   .then(() => {
-      //     let nextState = this.props.records;
-      //     delete nextState[id];
-      //     this.handleChange(nextState);
-      //   });
-      
+      db.collection("records").doc(id)
+        .delete()
+        .then(()=>{
+
+            this.handleChange();
+            console.log("삭제완료");
+          }
+        )
     }
   }
   render() {
