@@ -41,20 +41,44 @@ class App extends React.Component {
   }
 
   _get(){
-    db.collection("records").orderBy("timestamp", "desc").limit(5)
-      .get()
-      .then((querySnapshot) => {
+    db.collection("records")
+    .orderBy("timestamp", "desc")
+    .limit(5)
+    .get()
+      .then((documentSnapshots) => {
         var records = {}
-        var lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
-        console.log('lastVisible:'+lastVisible)
+        
+        // console.log('lastVisible:'+ lastVisible );
+        documentSnapshots.forEach(function(doc) {
+          records[doc.id] = { name: doc.data().name, time : doc.data().time }
+        });
+        this.setState({
+          records: records
+        });
+      })
+  }
+  _next(){
+    var first = db.collection("records")
+    .orderBy("timestamp", "desc")
+    .limit(5);
+
+    first.get().then((documentSnapshots)=>{
+      var lastVisible = documentSnapshots.docs[documentSnapshots.docs.length-1];
+      var next = db.collection("records")
+      .orderBy("timestamp", "desc")
+      .startAfter(lastVisible)
+      .limit(5);
+
+      next.get().then((querySnapshot) => {
+        var records = this.state.records
         querySnapshot.forEach(function(doc) {
             records[doc.id] = { name: doc.data().name, time : doc.data().time }
         });
         this.setState({
           records: records
         })
-        
       })
+    })
   }
 
   _moreList(){
@@ -104,7 +128,7 @@ class App extends React.Component {
           />
           <Grid container justify="center">
             <Grid item>
-              <Button className={classes.moreButton} onClick={() => this._moreList()}>more</Button>
+              <Button className={classes.moreButton} onClick={() => this._next()}>5개 더보기</Button>
             </Grid>
           </Grid>
         </Container>
