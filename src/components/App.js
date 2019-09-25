@@ -33,7 +33,8 @@ class App extends React.Component {
     this.state = {
       records: {},
       name: "",
-      time: ""
+      time: "",
+      lastVisible: {}
     };
   }
   handleRecords() {
@@ -47,36 +48,31 @@ class App extends React.Component {
     .get()
       .then((documentSnapshots) => {
         var records = {}
-        
-        // console.log('lastVisible:'+ lastVisible );
         documentSnapshots.forEach(function(doc) {
           records[doc.id] = { name: doc.data().name, time : doc.data().time }
         });
         this.setState({
-          records: records
+          records: records,
+          lastVisible: documentSnapshots.docs[documentSnapshots.docs.length-1]
         });
       })
   }
+  
   _next(){
-    var first = db.collection("records")
+    console.log(this.state.lastVisible, this.state.records);
+    var next = db.collection("records")
     .orderBy("timestamp", "desc")
+    .startAfter(this.state.lastVisible)
     .limit(5);
 
-    first.get().then((documentSnapshots)=>{
-      var lastVisible = documentSnapshots.docs[documentSnapshots.docs.length-1];
-      var next = db.collection("records")
-      .orderBy("timestamp", "desc")
-      .startAfter(lastVisible)
-      .limit(5);
-
-      next.get().then((querySnapshot) => {
-        var records = this.state.records
-        querySnapshot.forEach(function(doc) {
-            records[doc.id] = { name: doc.data().name, time : doc.data().time }
-        });
-        this.setState({
-          records: records
-        })
+    next.get().then((querySnapshot) => {
+      var records = this.state.records
+      querySnapshot.forEach(function(doc) {
+          records[doc.id] = { name: doc.data().name, time : doc.data().time }
+      });
+      this.setState({
+        records: records,
+        lastVisible: querySnapshot.docs[querySnapshot.docs.length-1]
       })
     })
   }
